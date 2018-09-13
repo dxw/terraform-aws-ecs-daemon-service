@@ -9,6 +9,11 @@ variable "task_role_arn" {
   default     = ""
 }
 
+variable "task_execution_role_arn" {
+  description = "Task execution role"
+  type        = "string"
+}
+
 variable "ecs_cluster_id" {
   description = "The id of the ECS cluster"
   type        = "string"
@@ -41,6 +46,18 @@ variable "task_cpu" {
 
 variable "task_memory" {
   description = "Task Memory"
+  type        = "string"
+  default     = ""
+}
+
+variable "container_name" {
+  description = "Container Name"
+  type        = "string"
+  default     = ""
+}
+
+variable "container_port" {
+  description = "Container Port"
   type        = "string"
   default     = ""
 }
