@@ -6,7 +6,7 @@ resource "aws_ecs_task_definition" "main" {
   cpu                      = "${var.task_cpu}"
   memory                   = "${var.task_memory}"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = "${var.awsvpc_task_execution_role_arn}"
+  execution_role_arn       = "${var.task_execution_role_arn}"
 }
 
 resource "aws_ecs_service" "main" {
