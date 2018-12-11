@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name            = "${var.service_name}"
+  name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.main.arn}"
