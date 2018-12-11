@@ -15,7 +15,7 @@ resource "aws_ecs_service" "main" {
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.main.arn}"
 
-  health_check_grace_period_seconds  = 30
+  health_check_grace_period_seconds = 30
 
   load_balancer {
     target_group_arn = "${var.lb_target_group_arn}"
