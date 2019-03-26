@@ -34,6 +34,24 @@ variable "task_definition" {
   type        = "string"
 }
 
+variable "task_network_mode" {
+  description = "The network mode to be used in the task definiton. Supported modes are awsvpc and bridge."
+  type        = "string"
+  default     = "bridge"
+}
+
+variable "awsvpc_service_security_groups" {
+  description = "List of security groups to be attached to service running in awsvpc network mode."
+  type        = "list"
+  default     = []
+}
+
+variable "awsvpc_service_subnetids" {
+  description = "List of subnet ids to which a service is deployed in awsvpc mode."
+  type        = "list"
+  default     = []
+}
+
 variable "ecs_service_role" {
   default = ""
 }
