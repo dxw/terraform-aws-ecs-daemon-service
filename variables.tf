@@ -68,6 +68,12 @@ variable "task_memory" {
   default     = ""
 }
 
+variable "task_volumes" {
+  description = "Task volumes"
+  type        = "list"
+  default     = []
+}
+
 variable "container_name" {
   description = "Container Name"
   type        = "string"

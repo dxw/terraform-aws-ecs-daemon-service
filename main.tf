@@ -7,6 +7,7 @@ resource "aws_ecs_task_definition" "main" {
   memory                   = "${var.task_memory}"
   requires_compatibilities = ["EC2"]
   execution_role_arn       = "${var.task_execution_role_arn}"
+  volume                   = ["${var.task_volumes}"]
 }
 
 # Service with bridge networking mode
