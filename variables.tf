@@ -85,3 +85,9 @@ variable "container_port" {
   type        = "string"
   default     = ""
 }
+
+variable "deployment_minimum_healthy_percent" {
+  description = "The lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment."
+  type        = "string"
+  default     = "50"
+}

@@ -19,6 +19,8 @@ resource "aws_ecs_service" "main" {
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.main.arn}"
 
+  deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
+
   health_check_grace_period_seconds = 30
 
   load_balancer {
@@ -38,6 +40,8 @@ resource "aws_ecs_service" "main_awsvpc" {
   iam_role        = "${var.ecs_service_role}"
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.main.arn}"
+
+  deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
 
   health_check_grace_period_seconds = 30
 
