@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "main" {
     for_each = var.task_volumes
 
     content {
-      name                        = volume.value.name
-      host_path                   = lookup(volume.value, "host_path", null) == null ? null : volume.value.host_path
+      name      = volume.value.name
+      host_path = lookup(volume.value, "host_path", null) == null ? null : volume.value.host_path
 
       dynamic "docker_volume_configuration" {
         for_each = lookup(volume.value, "docker_volume_configuration", null) == null ? [] : volume.value.docker_volume_configuration
@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "main" {
 
 # Service with bridge networking mode
 resource "aws_ecs_service" "main" {
-  count = "${var.task_network_mode == "bridge" ? 1 : 0 }"
+  count = "${var.task_network_mode == "bridge" ? 1 : 0}"
 
   name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
@@ -54,7 +54,7 @@ resource "aws_ecs_service" "main" {
 
 # Service with awsvpc networking mode
 resource "aws_ecs_service" "main_awsvpc" {
-  count = "${var.task_network_mode == "awsvpc" ? 1 : 0 }"
+  count = "${var.task_network_mode == "awsvpc" ? 1 : 0}"
 
   name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
