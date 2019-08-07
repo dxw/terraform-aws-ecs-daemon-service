@@ -52,8 +52,8 @@ resource "aws_ecs_service" "main_awsvpc" {
   }
 
   network_configuration {
-    security_groups = ["${var.awsvpc_service_security_groups}"]
-    subnets         = ["${var.awsvpc_service_subnetids}"]
+    security_groups = "${var.awsvpc_service_security_groups}"
+    subnets         = "${var.awsvpc_service_subnetids}"
   }
 
   scheduling_strategy = "DAEMON"
