@@ -3,6 +3,12 @@ variable "environment" {
   type        = "string"
 }
 
+variable "enabled" {
+  description = "Enable this module"
+  type        = "string"
+  default     = "true"
+}
+
 variable "task_role_arn" {
   description = "The AWS IAM role that will be provided to the task to perform AWS actions."
   type        = "string"
