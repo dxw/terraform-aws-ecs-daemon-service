@@ -1,4 +1,5 @@
 resource "aws_ecs_task_definition" "main" {
+  count                    = "${var.enabled = "true" ? 1 : 0}"
   family                   = "${var.environment}-${var.service_name}"
   container_definitions    = "${var.task_definition}"
   task_role_arn            = "${var.task_role_arn}"
@@ -32,7 +33,11 @@ resource "aws_ecs_task_definition" "main" {
 
 # Service with bridge networking mode
 resource "aws_ecs_service" "main" {
-  count = "${var.task_network_mode == "bridge" ? 1 : 0}"
+  count = (
+    var.task_network_mode == "bridge" ? (
+      var.enabled == "true" ? 1 : 0
+    ) : 0
+  )
 
   name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
@@ -54,7 +59,11 @@ resource "aws_ecs_service" "main" {
 
 # Service with awsvpc networking mode
 resource "aws_ecs_service" "main_awsvpc" {
-  count = "${var.task_network_mode == "awsvpc" ? 1 : 0}"
+  count = (
+    var.task_network_mode == "awsvpc" ? (
+      var.enabled == "true" ? 1 : 0
+    ) : 0
+  )
 
   name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
