@@ -42,7 +42,7 @@ resource "aws_ecs_service" "main" {
   name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
   cluster         = "${var.ecs_cluster_id}"
-  task_definition = "${aws_ecs_task_definition.main.arn}"
+  task_definition = "${join("", aws_ecs_task_definition.main.*.arn)}"
 
   deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
 
@@ -68,7 +68,7 @@ resource "aws_ecs_service" "main_awsvpc" {
   name            = "${var.environment}-${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
   cluster         = "${var.ecs_cluster_id}"
-  task_definition = "${aws_ecs_task_definition.main.arn}"
+  task_definition = "${join("", aws_ecs_task_definition.main.*.arn)}"
 
   deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
 
