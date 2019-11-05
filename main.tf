@@ -39,7 +39,7 @@ resource "aws_ecs_service" "main" {
     ) : 0
   )
 
-  name            = "${var.environment}-${var.service_name}"
+  name            = "${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${join("", aws_ecs_task_definition.main.*.arn)}"
@@ -65,7 +65,7 @@ resource "aws_ecs_service" "main_awsvpc" {
     ) : 0
   )
 
-  name            = "${var.environment}-${var.service_name}"
+  name            = "${var.service_name}"
   iam_role        = "${var.ecs_service_role}"
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${join("", aws_ecs_task_definition.main.*.arn)}"
