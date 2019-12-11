@@ -49,7 +49,7 @@ resource "aws_ecs_service" "main" {
   health_check_grace_period_seconds = 30
 
   dynamic "load_balancer" {
-    foreach = var.lb_target_group_arn == "" ? [] : [1]
+    for_each = var.lb_target_group_arn == "" ? [] : [1]
 
     content {
       target_group_arn = "${var.lb_target_group_arn}"
@@ -79,7 +79,7 @@ resource "aws_ecs_service" "main_awsvpc" {
   health_check_grace_period_seconds = 30
 
   dynamic "load_balancer" {
-    foreach = var.lb_target_group_arn == "" ? [] : [1]
+    for_each = var.lb_target_group_arn == "" ? [] : [1]
 
     content {
       target_group_arn = "${var.lb_target_group_arn}"
