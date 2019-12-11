@@ -48,10 +48,14 @@ resource "aws_ecs_service" "main" {
 
   health_check_grace_period_seconds = 30
 
-  load_balancer {
-    target_group_arn = "${var.lb_target_group_arn}"
-    container_name   = "${var.container_name}"
-    container_port   = "${var.container_port}"
+  dynamic "load_balancer" {
+    foreach = var.lb_target_group_arn == "" ? [] : [1]
+
+    content {
+      target_group_arn = "${var.lb_target_group_arn}"
+      container_name   = "${var.container_name}"
+      container_port   = "${var.container_port}"
+    }
   }
 
   scheduling_strategy = "DAEMON"
@@ -74,10 +78,14 @@ resource "aws_ecs_service" "main_awsvpc" {
 
   health_check_grace_period_seconds = 30
 
-  load_balancer {
-    target_group_arn = "${var.lb_target_group_arn}"
-    container_name   = "${var.container_name}"
-    container_port   = "${var.container_port}"
+  dynamic "load_balancer" {
+    foreach = var.lb_target_group_arn == "" ? [] : [1]
+
+    content {
+      target_group_arn = "${var.lb_target_group_arn}"
+      container_name   = "${var.container_name}"
+      container_port   = "${var.container_port}"
+    }
   }
 
   network_configuration {
