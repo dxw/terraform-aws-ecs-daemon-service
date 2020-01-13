@@ -46,7 +46,7 @@ resource "aws_ecs_service" "main" {
 
   deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
 
-  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : 30
+  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : "${var.lb_health_check_grace_period_seconds}"
 
   dynamic "load_balancer" {
     for_each = var.lb_target_group_arn == "" ? [] : [1]
@@ -76,7 +76,7 @@ resource "aws_ecs_service" "main_awsvpc" {
 
   deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
 
-  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : 30
+  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : "${var.lb_health_check_grace_period_seconds}"
 
   dynamic "load_balancer" {
     for_each = var.lb_target_group_arn == "" ? [] : [1]
