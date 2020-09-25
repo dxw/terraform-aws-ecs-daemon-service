@@ -1,6 +1,6 @@
 resource "aws_ecs_task_definition" "main" {
   count                    = var.enabled == "true" ? 1 : 0
-  family                   = var.environment}-${var.service_name
+  family                   = "${var.environment}-${var.service_name}"
   container_definitions    = var.task_definition
   task_role_arn            = var.task_role_arn
   network_mode             = var.task_network_mode
