@@ -1,13 +1,13 @@
 resource "aws_ecs_task_definition" "main" {
-  count                    = "${var.enabled == "true" ? 1 : 0}"
-  family                   = "${var.environment}-${var.service_name}"
-  container_definitions    = "${var.task_definition}"
-  task_role_arn            = "${var.task_role_arn}"
-  network_mode             = "${var.task_network_mode}"
-  cpu                      = "${var.task_cpu}"
-  memory                   = "${var.task_memory}"
+  count                    = var.enabled == "true" ? 1 : 0
+  family                   = var.environment}-${var.service_name
+  container_definitions    = var.task_definition
+  task_role_arn            = var.task_role_arn
+  network_mode             = var.task_network_mode
+  cpu                      = var.task_cpu
+  memory                   = var.task_memory
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = "${var.task_execution_role_arn}"
+  execution_role_arn       = var.task_execution_role_arn
 
   dynamic "volume" {
     for_each = var.task_volumes
@@ -40,21 +40,21 @@ resource "aws_ecs_service" "main" {
   )
 
   name            = "${var.environment}-${var.service_name}"
-  iam_role        = "${var.ecs_service_role}"
-  cluster         = "${var.ecs_cluster_id}"
-  task_definition = "${join("", aws_ecs_task_definition.main.*.arn)}"
+  iam_role        = var.ecs_service_role
+  cluster         = var.ecs_cluster_id
+  task_definition = join("", aws_ecs_task_definition.main.*.arn)
 
-  deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
+  deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
 
-  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : "${var.lb_health_check_grace_period_seconds}"
+  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : var.lb_health_check_grace_period_seconds
 
   dynamic "load_balancer" {
     for_each = var.lb_target_group_arn == "" ? [] : [1]
 
     content {
-      target_group_arn = "${var.lb_target_group_arn}"
-      container_name   = "${var.container_name}"
-      container_port   = "${var.container_port}"
+      target_group_arn = var.lb_target_group_arn
+      container_name   = var.container_name
+      container_port   = var.container_port
     }
   }
 
@@ -70,27 +70,27 @@ resource "aws_ecs_service" "main_awsvpc" {
   )
 
   name            = "${var.environment}-${var.service_name}"
-  iam_role        = "${var.ecs_service_role}"
-  cluster         = "${var.ecs_cluster_id}"
-  task_definition = "${join("", aws_ecs_task_definition.main.*.arn)}"
+  iam_role        = var.ecs_service_role
+  cluster         = var.ecs_cluster_id
+  task_definition = join("", aws_ecs_task_definition.main.*.arn)
 
-  deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
+  deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
 
-  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : "${var.lb_health_check_grace_period_seconds}"
+  health_check_grace_period_seconds = var.lb_target_group_arn == "" ? null : var.lb_health_check_grace_period_seconds
 
   dynamic "load_balancer" {
     for_each = var.lb_target_group_arn == "" ? [] : [1]
 
     content {
-      target_group_arn = "${var.lb_target_group_arn}"
-      container_name   = "${var.container_name}"
-      container_port   = "${var.container_port}"
+      target_group_arn = var.lb_target_group_arn
+      container_name   = var.container_name
+      container_port   = var.container_port
     }
   }
 
   network_configuration {
-    security_groups = "${var.awsvpc_service_security_groups}"
-    subnets         = "${var.awsvpc_service_subnetids}"
+    security_groups = var.awsvpc_service_security_groups
+    subnets         = var.awsvpc_service_subnetids
   }
 
   scheduling_strategy = "DAEMON"
